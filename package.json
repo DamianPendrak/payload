@@ -44,7 +44,8 @@
     "clean": "rimraf dist",
     "release": "release-it",
     "release:beta": "release-it prepatch --config .release-it.beta.json",
-    "lint": "eslint \"src/**/*.ts\""
+    "lint": "eslint \"src/**/*.ts\"",
+    "prepare": "yarn build"
   },
   "bugs": {
     "url": "https://github.com/payloadcms/payload"
