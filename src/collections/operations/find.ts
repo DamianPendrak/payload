@@ -125,6 +125,10 @@ async function find<T extends TypeWithID = any>(incomingArgs: Arguments): Promis
     lean: true,
     leanWithId: true,
     useEstimatedCount,
+    collation: {
+      locale: 'pl',
+      strength: 2,
+    },
   };
 
   const paginatedDocs = await Model.paginate(query, optionsToExecute);
