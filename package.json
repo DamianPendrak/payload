@@ -1,6 +1,6 @@
 {
   "name": "@dpendrak/payload",
-  "version": "0.14.14.0",
+  "version": "0.14.14",
   "description": "Node, React and MongoDB Headless CMS and Application Framework",
   "license": "SEE LICENSE IN license.md",
   "author": "Payload CMS <info@payloadcms.com> (https://payloadcms.com)",
