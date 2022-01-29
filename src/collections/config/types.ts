@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DeepRequired } from 'ts-essentials';
-import { PaginateModel, PassportLocalModel } from 'mongoose';
+import { PaginateModel, PassportLocalModel, AggregatePaginateModel } from 'mongoose';
 import { Access, GeneratePreviewURL } from '../../config/types';
 import { Field } from '../../fields/config/types';
 import { PayloadRequest } from '../../express/types';
 import { IncomingAuthType, Auth } from '../../auth/types';
 import { IncomingUploadType, Upload } from '../../uploads/types';
 
-export interface CollectionModel extends PaginateModel<any>, PassportLocalModel<any> {
+export interface CollectionModel extends PaginateModel<any>, AggregatePaginateModel<any>, PassportLocalModel<any> {
   buildQuery: (query: unknown, locale?: string) => Record<string, unknown>
 }
 
