@@ -139,7 +139,7 @@ async function find<T extends TypeWithID = any>(incomingArgs: Arguments): Promis
     collectionsAggregate
       .addFields({
         albumId: { $toObjectId: '$album.value' },
-        authorId: { $toObjectId: '$authors[0].value' },
+        authorId: { $toObjectId: '$authors.value' },
       })
       .lookup({
         from: 'albums',
