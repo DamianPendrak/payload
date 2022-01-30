@@ -55,7 +55,7 @@ async function find<T extends TypeWithID = any>(incomingArgs: Arguments): Promis
   // Access
   // /////////////////////////////////////
 
-  const queryToBuild: { where?: Where} = {};
+  const queryToBuild: { where?: Where } = {};
   let useEstimatedCount = false;
 
   if (where) {
@@ -73,7 +73,8 @@ async function find<T extends TypeWithID = any>(incomingArgs: Arguments): Promis
 
     const constraints = flattenWhereConstraints(queryToBuild);
 
-    useEstimatedCount = constraints.some((prop) => Object.keys(prop).some((key) => key === 'near'));
+    useEstimatedCount = constraints.some((prop) => Object.keys(prop)
+      .some((key) => key === 'near'));
   }
 
   if (!overrideAccess) {
@@ -132,9 +133,21 @@ async function find<T extends TypeWithID = any>(incomingArgs: Arguments): Promis
   };
 
   const collectionsAggregate = Model.aggregate()
-    .lookup({ from: 'albums', localField: 'album.value', foreignField: 'albums.id', as: 'album_docs2' })
-    .lookup({ from: 'albums', localField: 'album.value', foreignField: 'albums._id', as: 'album_docs' })
-    .lookup({ from: 'authors', localField: 'author.value', foreignField: 'id', as: 'author_docs' });
+    .project({
+      albumId: { $toObjectId: '$album.value' },
+    })
+    .lookup({
+      from: 'albums',
+      localField: 'albumId',
+      foreignField: '_id',
+      as: 'album_docs',
+    })
+    .lookup({
+      from: 'authors',
+      localField: 'author.value',
+      foreignField: '_id',
+      as: 'author_docs',
+    });
 
   const paginatedDocs = await Model.aggregatePaginate(collectionsAggregate, optionsToExecute);
 
@@ -151,7 +164,11 @@ async function find<T extends TypeWithID = any>(incomingArgs: Arguments): Promis
       await collectionConfig.hooks.beforeRead.reduce(async (priorHook, hook) => {
         await priorHook;
 
-        docRef = await hook({ req, query, doc: docRef }) || docRef;
+        docRef = await hook({
+          req,
+          query,
+          doc: docRef
+        }) || docRef;
       }, Promise.resolve());
 
       return docRef;
@@ -193,7 +210,11 @@ async function find<T extends TypeWithID = any>(incomingArgs: Arguments): Promis
       await collectionConfig.hooks.afterRead.reduce(async (priorHook, hook) => {
         await priorHook;
 
-        docRef = await hook({ req, query, doc }) || doc;
+        docRef = await hook({
+          req,
+          query,
+          doc
+        }) || doc;
       }, Promise.resolve());
 
       return docRef;
