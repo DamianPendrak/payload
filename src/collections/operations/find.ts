@@ -133,13 +133,9 @@ async function find<T extends TypeWithID = any>(incomingArgs: Arguments): Promis
   };
 
 
-  const collectionsAggregate = Model.aggregate([], optionsToExecute)
-    .match(query);
-
-  if (sortProperty.includes('.')) {
-    collectionsAggregate
-      .unwind('authors.value');
-  }
+  const collectionsAggregate = Model.aggregate([
+    { $match: query },
+  ], optionsToExecute);
 
   const paginatedDocs = await Model.aggregatePaginate(collectionsAggregate, optionsToExecute);
 
