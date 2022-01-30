@@ -147,7 +147,8 @@ async function find<T extends TypeWithID = any>(incomingArgs: Arguments): Promis
       localField: 'author.value',
       foreignField: '_id',
       as: 'author_docs',
-    });
+    })
+    .match(query);
 
   const paginatedDocs = await Model.aggregatePaginate(collectionsAggregate, optionsToExecute);
 
