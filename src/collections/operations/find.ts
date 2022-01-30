@@ -139,10 +139,13 @@ async function find<T extends TypeWithID = any>(incomingArgs: Arguments): Promis
 
   if (sortProperty.includes('.')) {
     collectionsAggregate
-      .unwind('authors')
+      .addFields({
+        authors_backup: '$authors',
+      })
+      .unwind('authors_backup')
       .addFields({
         albumId: { $toObjectId: '$album.value' },
-        authorId: { $toObjectId: '$authors.value' },
+        authorId: { $toObjectId: '$authors_backup.value' },
       })
       .lookup({
         from: 'albums',
