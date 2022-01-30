@@ -133,7 +133,7 @@ async function find<T extends TypeWithID = any>(incomingArgs: Arguments): Promis
   };
 
   const collectionsAggregate = Model.aggregate()
-    .project({
+    .addFields({
       albumId: { $toObjectId: '$album.value' },
     })
     .lookup({
