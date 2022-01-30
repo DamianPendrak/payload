@@ -135,6 +135,7 @@ async function find<T extends TypeWithID = any>(incomingArgs: Arguments): Promis
   const collectionsAggregate = Model.aggregate()
     .addFields({
       albumId: { $toObjectId: '$album.value' },
+      authorId: { $toObjectId: '$authors.value' },
     })
     .lookup({
       from: 'albums',
@@ -144,7 +145,7 @@ async function find<T extends TypeWithID = any>(incomingArgs: Arguments): Promis
     })
     .lookup({
       from: 'authors',
-      localField: 'author.value',
+      localField: 'authorId',
       foreignField: '_id',
       as: 'author_docs',
     })
