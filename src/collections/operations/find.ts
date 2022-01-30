@@ -132,8 +132,9 @@ async function find<T extends TypeWithID = any>(incomingArgs: Arguments): Promis
   };
 
   const collectionsAggregate = Model.aggregate()
-    .lookup({ from: 'albums', localField: 'album.value', foreignField: '_id', as: 'album_docs' })
-    .lookup({ from: 'authors', localField: 'author.value', foreignField: '_id', as: 'author_docs' });
+    .lookup({ from: 'albums', localField: 'album.value', foreignField: 'albums.id', as: 'album_docs2' })
+    .lookup({ from: 'albums', localField: 'album.value', foreignField: 'albums._id', as: 'album_docs' })
+    .lookup({ from: 'authors', localField: 'author.value', foreignField: 'id', as: 'author_docs' });
 
   const paginatedDocs = await Model.aggregatePaginate(collectionsAggregate, optionsToExecute);
 
