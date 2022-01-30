@@ -132,11 +132,12 @@ async function find<T extends TypeWithID = any>(incomingArgs: Arguments): Promis
     },
   };
 
-  let collectionsAggregate;
+
+  const collectionsAggregate = Model.aggregate([], optionsToExecute)
+    .match(query);
 
   if (sortProperty.includes('.')) {
-    collectionsAggregate = Model.aggregate()
-      .match(query)
+    collectionsAggregate
       .addFields({
         albumId: { $toObjectId: '$album.value' },
         authorId: { $toObjectId: '$authors.value' },
@@ -155,9 +156,7 @@ async function find<T extends TypeWithID = any>(incomingArgs: Arguments): Promis
       });
   }
 
-  const paginatedDocs = sortProperty.includes('.')
-    ? await Model.aggregatePaginate(collectionsAggregate, optionsToExecute)
-    : await Model.paginate(query, optionsToExecute);
+  const paginatedDocs = await Model.aggregatePaginate(collectionsAggregate, optionsToExecute);
 
   // /////////////////////////////////////
   // beforeRead - Collection
