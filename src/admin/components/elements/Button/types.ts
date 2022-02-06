@@ -15,6 +15,7 @@ export type Props = {
   round?: boolean,
   size?: 'small' | 'medium',
   iconPosition?: 'left' | 'right',
-  newTab?: boolean
-  tooltip?: string
+  newTab?: boolean,
+  tooltip?: string,
+  processing?: boolean,
 }
