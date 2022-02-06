@@ -3,6 +3,7 @@ import { useForm, useFormProcessing } from '../Form/context';
 import Button from '../../elements/Button';
 
 import './index.scss';
+import Spinner from '../../icons/Spinner';
 
 const baseClass = 'form-submit';
 
@@ -15,8 +16,9 @@ const FormSubmit = ({ children }) => {
       <Button
         type="submit"
         disabled={processing || disabled ? true : undefined}
+        processing={processing}
       >
-        {children}
+        {processing ? (<Spinner />) : children}
       </Button>
     </div>
   );

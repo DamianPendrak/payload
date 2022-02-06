@@ -64,6 +64,7 @@ const Button: React.FC<Props> = (props) => {
     iconPosition = 'right',
     newTab,
     tooltip,
+    processing,
   } = props;
 
   const classes = [
@@ -78,6 +79,7 @@ const Button: React.FC<Props> = (props) => {
     size && `${baseClass}--size-${size}`,
     iconPosition && `${baseClass}--icon-position-${iconPosition}`,
     tooltip && `${baseClass}--has-tooltip`,
+    processing && `${baseClass}--processing`,
   ].filter(Boolean).join(' ');
 
   function handleClick(event) {
