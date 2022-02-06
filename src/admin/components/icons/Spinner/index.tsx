@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './index.scss';
+
 const Spinner: React.FC = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
